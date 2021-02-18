@@ -29,10 +29,45 @@
     line-height: 2rem;
   }
 
-  > .searchBox {
-    margin: 40px 0;
+  > .searchBox__wrap {
+    margin: 3rem 0;
     @media (min-width: $breakpoint) {
-      margin: 80px 0;
+      margin: 5rem 0;
+    }
+
+
+    &.searchBox--error {
+      margin-bottom: 0;
+      color: $errorColor;
+
+      .searchBox {
+        border-color: $errorColor;
+
+        button {
+          background: $errorGradient;
+        }
+      }
+
+      > .searchBox__error {
+        padding-bottom: 1rem;
+        display: inline-flex;
+        align-items: center;
+        font-size: 1.25rem;
+        height: 3rem;
+        @media (min-width: $breakpoint) {
+          height: 5rem;
+        }
+      }
+    }
+
+    > searchBox__suggestions {
+      border-radius: 2rem;
+      position: absolute;
+      box-shadow: $shadow;
+      padding-top: 42px;
+      @media (min-width: $breakpoint) {
+        padding-top: 69px;
+      }
     }
   }
 
@@ -50,6 +85,9 @@
       border-bottom: 1px solid $borderColor;
 
       &:hover {
+        box-shadow: $shadow;
+        border-bottom: 1px solid transparent;
+        border-radius: 3rem;
         cursor: pointer;
       }
 
@@ -61,23 +99,28 @@
 }
 
 .deliveryOptionsList {
+  $mobilePad: 20px;
+  $desktopPad: 100px;
+
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: $mobilePad;
   overflow: hidden;
   background-color: $deliveryOptionsBackground;
-  //padding: $padding;
+
   border-radius: $deliveryOptionsBorderRadius $deliveryOptionsBorderRadius 0 0;
   @media (min-width: $breakpoint) {
     border-radius: $deliveryOptionsBorderRadius 0 0 $deliveryOptionsBorderRadius;
-    padding: 132px 100px;
+    padding: $desktopPad;
   }
 
   &__placeholder {
     object-fit: cover;
+    margin: -$mobilePad;
     @media (min-width: $breakpoint) {
       height: 100vh;
       max-width: 50vw;
+      margin: -$desktopPad;
     }
   }
 
@@ -85,10 +128,14 @@
     height: 14rem;
     display: flex;
     max-width: 450px;
-    margin: 8px;
+    margin: 1rem;
     cursor: pointer;
     background-color: white;
     border-radius: $deliveryOptionsListItemBorderRadius;
+
+    &:not(#{&}--unavailable):hover {
+      box-shadow: $shadow;
+    }
 
     &--unavailable {
       opacity: 0.625;
@@ -138,7 +185,7 @@
       padding: 0.5rem;
       border-top-right-radius: inherit;
       border-bottom-right-radius: inherit;
-      background: linear-gradient(279.56deg, #65B3E4 15.15%, rgba(120, 161, 187, 0) 171.55%);
+      background: $gradient;
       @media (min-width: $breakpoint) {
         width: 72px;
         padding: 1rem;
@@ -147,10 +194,13 @@
   }
 }
 
-.searchBox {
-  z-index: 10;
+.searchBox__wrap {
   position: relative;
   max-width: 500px;
+}
+
+.searchBox {
+  z-index: 10;
   border-radius: 2rem;
   border: 1px solid $borderColor;
   background-color: white;
@@ -170,7 +220,7 @@
       }
     }
 
-    > input[type=text] {
+    > input {
       flex: 1 1 auto;
       min-width: 200px;
       padding: 1rem 1.5rem;
@@ -186,13 +236,13 @@
       }
     }
 
-    > input[type=button] {
+    > button {
       display: block;
       flex: 0 0 auto;
       padding: 1rem;
       margin: -1px;
       color: white;
-      background: linear-gradient(279.56deg, #65B3E4 15.15%, rgba(120, 161, 187, 0) 171.55%);
+      background: $gradient;
       border-radius: inherit;
       text-transform: uppercase;
       @media (min-width: $breakpoint) {
@@ -204,6 +254,7 @@
 
 #main {
   width: 100%;
+  min-height: 100vh;
   display: grid;
   gap: 0;
   grid-template-columns: 1fr 2fr 2fr 1fr;

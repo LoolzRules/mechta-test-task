@@ -107,3 +107,21 @@ img {
     }
   }
 }
+
+.button--icon {
+  display: flex!important;
+  padding: 0!important;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  width: 42px;
+  @media (min-width: $breakpoint) {
+    height: 69px;
+    width: 69px;
+  }
+  > img {
+    height: 50%;
+    width: 50%;
+  }
+}

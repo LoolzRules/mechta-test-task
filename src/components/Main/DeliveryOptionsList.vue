@@ -1,6 +1,6 @@
 <template>
   <div class="deliveryOptionsList">
-    <ul v-if="options.length > 0">
+    <ul v-if="options.length > 0 && !loading">
       <DeliveryOptionsListItem
           v-for="(option, idx) of options"
           :selected="idx === selectedIdx"
@@ -8,7 +8,9 @@
           @click.native="() => toggleIfAvailable(option, idx)"
           :opt="option"/>
     </ul>
-    <img v-else class="deliveryOptionsList__placeholder" src="@/assets/DeliveryOptionsList/placeholder.svg">
+    <img v-else
+         class="deliveryOptionsList__placeholder"
+         src="@/assets/DeliveryOptionsList/placeholder.svg">
   </div>
 </template>
 
@@ -23,14 +25,14 @@ export default {
     options: {
       type: Array,
       validator: prop => prop.every(e => e instanceof ApiResponseItem)
-    }
+    },
+    loading: Boolean,
   },
   data: () => ({
     selectedIdx: -1,
   }),
   methods: {
     toggleIfAvailable(option, idx) {
-      console.log("here");
       if (!option.available) return;
       this.selectedIdx = this.selectedIdx === idx ? -1 : idx;
     }

@@ -1,9 +1,12 @@
 <template>
   <div id="main">
     <PageHeader/>
-    <CitySelector/>
+    <CitySelector
+        ref="citySelector"
+        @citySelected="getDeliveryOptions"/>
     <DeliveryOptionsList
-        :options="deliveryOptions"/>
+        :options="deliveryOptions"
+        :loading="loading"/>
     <PageFooter/>
   </div>
 </template>
@@ -25,32 +28,31 @@ export default {
   },
   data: () => ({
     deliveryOptions: [],
+    loading: false,
   }),
-  created() {
-    this.getDeliveryOptions();
-  },
   methods: {
-    async getDeliveryOptions() {
+    async getDeliveryOptions(city) {
+      city = city.toLowerCase();
       this.deliveryOptions = [];
-      this.removeError();
+      this.$refs.citySelector.setSearchBoxError(false);
       try {
+        this.loading = true;
         const response = await fetch("http://qvjgl.mocklab.io/delivery/check?" + new URLSearchParams({
-          search: 'aktau',
+          search: city,
         }));
         if (!response.ok) {
-          this.raiseError();
+          this.$refs.citySelector.setSearchBoxError(true);
+          this.loading = false;
           return;
         }
         const result = await response.json();
         this.deliveryOptions = result.map(opt => new ApiResponseItem(opt));
+        this.loading = false;
       } catch (e) {
-        this.raiseError();
+        this.$refs.citySelector.setSearchBoxError(true);
+        this.loading = false;
       }
     },
-    raiseError() {
-    },
-    removeError() {
-    }
   }
 };
 </script>

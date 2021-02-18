@@ -2,16 +2,16 @@
   <li class="deliveryOptionsList__item" :class="{'deliveryOptionsList__item--unavailable': !opt.available}">
     <div class="wrapper">
       <div class="text_wrapper">
-        <h4 class="item__name">{{deliveryOptionName}}</h4>
+        <h4 class="item__name">{{ deliveryOptionName }}</h4>
         <p v-if="!opt.available" class="item__isUnavailable">Not available in that city</p>
-        <h4 class="item__price">{{deliveryOptionPrice}}</h4>
+        <h4 class="item__price">{{ deliveryOptionPrice }}</h4>
       </div>
       <img :src="deliveryOptionImage" alt="delivery option logo" class="item__type">
     </div>
     <img v-if="selected"
          :src="check"
          alt="selected"
-         class="item__isSelected" />
+         class="item__isSelected"/>
   </li>
 </template>
 
