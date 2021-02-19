@@ -65,11 +65,12 @@ export default {
       if (!this.validator)
         return;
 
+      this.inputText.trim();
       const textIsValid = this.validator(this.inputText);
       this.error = !textIsValid;
     },
-    submit() {
-      this.enteringText = false;
+    submit(event) {
+      this.handleEsc(event);
       if (!this.inputText)
         return;
 

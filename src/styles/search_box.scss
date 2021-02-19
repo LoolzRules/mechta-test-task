@@ -11,15 +11,21 @@
   border-radius: $radius $radius 0 0;
   background-color: white;
 
+  $fullHsm: 42px;
+  $fullHlg: 69px;
+
   @mixin shadow {
     &:before {
       content: " ";
       width: 100%;
-      height: 100%;
+      height: $fullHsm;
       box-shadow: $shadow;
       border-radius: inherit;
       position: absolute;
       z-index: -1;
+      @media (min-width: $breakpoint) {
+        height: $fullHlg;
+      }
     }
   }
 
@@ -83,15 +89,22 @@
     & > &__suggestions {
       display: none;
       position: absolute;
-      top: 100%;
+      top: $fullHsm;
       left: 0;
       right: 0;
       background-color: white;
       cursor: pointer;
       border-radius: 0 0 $radius $radius;
       margin: 0;
+      @media (min-width: $breakpoint) {
+        top: $fullHlg;
+      }
 
       @include shadow;
+
+      > .citiesList__item {
+        border-top: 1px solid $borderColor;
+      }
     }
 
     &.active > &__suggestions {

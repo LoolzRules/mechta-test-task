@@ -37,7 +37,7 @@ export default {
       this.$refs.citySelector.setSearchBoxError(false);
       try {
         this.loading = true;
-        const response = await fetch("http://qvjgl.mocklab.io/delivery/check?" + new URLSearchParams({
+        const response = await fetch("https://qvjgl.mocklab.io/delivery/check?" + new URLSearchParams({
           search: city,
         }));
         if (!response.ok) {
