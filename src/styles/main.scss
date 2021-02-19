@@ -86,7 +86,7 @@
 
       &:hover {
         box-shadow: $shadow;
-        border-bottom: 1px solid transparent;
+        border-bottom-color: transparent;
         border-radius: 3rem;
         cursor: pointer;
       }
@@ -189,64 +189,6 @@
       @media (min-width: $breakpoint) {
         width: 72px;
         padding: 1rem;
-      }
-    }
-  }
-}
-
-.searchBox__wrap {
-  position: relative;
-  max-width: 500px;
-}
-
-.searchBox {
-  z-index: 10;
-  border-radius: 2rem;
-  border: 1px solid $borderColor;
-  background-color: white;
-
-  &__field {
-    display: flex;
-    border-radius: inherit;
-
-    > input,
-    > button {
-      outline: none;
-      border: none;
-      font-size: 1.25rem;
-      font-weight: bold;
-      @media (min-width: $breakpoint) {
-        font-size: 1.5rem;
-      }
-    }
-
-    > input {
-      flex: 1 1 auto;
-      min-width: 200px;
-      padding: 1rem 1.5rem;
-      border-radius: inherit;
-
-      &::-webkit-input-placeholder {
-        font-weight: normal !important;
-        color: $placeholderColor;
-      }
-
-      @media (min-width: $breakpoint) {
-        padding: 1.25rem 2rem;
-      }
-    }
-
-    > button {
-      display: block;
-      flex: 0 0 auto;
-      padding: 1rem;
-      margin: -1px;
-      color: white;
-      background: $gradient;
-      border-radius: inherit;
-      text-transform: uppercase;
-      @media (min-width: $breakpoint) {
-        padding: 1.25rem 3rem;
       }
     }
   }

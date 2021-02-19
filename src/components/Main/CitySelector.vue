@@ -38,7 +38,7 @@ export default {
     },
     setCityFromList(city) {
       this.$emit('citySelected', city);
-      this.$refs.searchBox.inputText = city;
+      this.$refs.searchBox.setInputText(city);
     }
   }
 };

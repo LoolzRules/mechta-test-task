@@ -1,14 +1,17 @@
 <template>
   <div class="searchBox__wrap" :class="{'searchBox--error':error}">
     <div class="searchBox">
-      <div class="searchBox__field">
+      <div class="searchBox__field" :class="{'active': enteringText}">
         <input type="text"
                v-model="inputText"
                name="search"
+               ref="input"
                placeholder="Enter name of the city"
                @keyup.enter="submit"
+               @focus="enteringText = true"
+               @keyup.esc="handleEsc"
                autocomplete="off">
-        <button v-if="!submitted"
+        <button v-if="!submitted || inputText.length === 0"
                 @click="submit"
                 value="Enter">Enter
         </button>
@@ -19,6 +22,17 @@
                 value="Erase">
           <img :src="cross" alt="Erase">
         </button>
+        <ul class="citiesList searchBox__field__suggestions">
+          <template v-if="filteredSuggestions.length > 0">
+            <li v-for="s in filteredSuggestions"
+                :key="s"
+                @click="() => setInputText(s)"
+                class="citiesList__item">
+              {{ s }}
+            </li>
+          </template>
+          <li class="citiesList__item" v-else>No suggestions</li>
+        </ul>
       </div>
     </div>
     <span v-if="error" class="searchBox__error">{{ errorText }}</span>
@@ -39,9 +53,14 @@ export default {
     error: false,
     inputText: "",
     submitted: false,
+    enteringText: false,
     cross
   }),
   methods: {
+    setInputText(text) {
+      this.inputText = text;
+      this.$refs.input.focus();
+    },
     validate() {
       if (!this.validator)
         return;
@@ -50,6 +69,7 @@ export default {
       this.error = !textIsValid;
     },
     submit() {
+      this.enteringText = false;
       if (!this.inputText)
         return;
 
@@ -59,6 +79,10 @@ export default {
       if (!this.error) {
         this.$emit('inputSubmitted', this.inputText);
       }
+    },
+    handleEsc(event) {
+      event.target.blur();
+      this.enteringText = false;
     }
   },
   computed: {
@@ -68,3 +92,7 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/search_box";
+</style>
